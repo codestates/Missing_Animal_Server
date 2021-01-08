@@ -25,7 +25,20 @@ app.use(
   })
 );
 
-// 테스트
+// router
+const authRouter = require("./routes/auth");
+const usersRouter = require("./routes/users");
+const petsRouter = require("./routes/pets");
+const mapinfoRouter = require("./routes/mapinfo");
+const commentsRouter = require("./routes/comments");
+
+app.use("/auth", authRouter);
+app.use("/users", usersRouter);
+app.use("/pets", petsRouter);
+app.use("/mapinfo", mapinfoRouter);
+app.use("/comments", commentsRouter);
+
+// test
 app.get("/", (req, res) => {
   res.send("HELLO WORLD");
 });
