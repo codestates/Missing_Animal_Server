@@ -25,4 +25,10 @@ db.Comments.belongsTo(db.Users);
 db.Users.hasMany(db.Pets, { foreignKey: { allowNull: false } });
 db.Pets.belongsTo(db.Users);
 
+db.Pets.hasMany(db.Comments, { foreignKey: { allowNull: false } });
+db.Comments.belongsTo(db.Pets);
+
+db.Pets.hasMany(db.PetsImages, { foreignKey: { allowNull: false } });
+db.PetsImages.belongsTo(db.Pets);
+
 module.exports = db;

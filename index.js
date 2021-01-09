@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const session = require("express-session");
@@ -12,16 +13,22 @@ const port = 8080;
 app.use(
   cors({
     origin: "http://localhost:3000",
-    methods: "GET,PUT,POST",
+    methods: ["OPTIONS", "GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
-
+app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(
   session({
-    secret: "@nimal",
     resave: false,
     saveUninitialized: true,
+    secret: process.env.COOKIE_SECRET,
+    cookie: {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+    },
   })
 );
 
@@ -37,11 +44,6 @@ app.use("/users", usersRouter);
 app.use("/pets", petsRouter);
 app.use("/mapinfo", mapinfoRouter);
 app.use("/comments", commentsRouter);
-
-// test
-app.get("/", (req, res) => {
-  res.send("HELLO WORLD");
-});
 
 app.listen(port, () => {
   console.log("server on " + port);
