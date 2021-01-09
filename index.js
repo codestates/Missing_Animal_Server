@@ -32,7 +32,6 @@ app.use(
   })
 );
 
-// router
 const authRouter = require("./routes/auth");
 const usersRouter = require("./routes/users");
 const petsRouter = require("./routes/pets");
