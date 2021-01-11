@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const session = require("express-session");
@@ -23,16 +24,16 @@ passportConfig(passport);
 app.use(
   cors({
     origin: "http://localhost:3000",
-    methods: ["GET", "PUT", "POST", "DELETE", "OPTIONS"],
+    methods: ["OPTIONS", "GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
-
+app.use(cookieParser());
 app.use(
   session({
-    secret: "@nimal",
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
+    secret: process.env.COOKIE_SECRET,
     cookie: {
       httpOnly: true,
       secure: true,
@@ -41,8 +42,9 @@ app.use(
     },
   })
 );
+app.use(express.urlencoded());
+app.use(express.json());
 
-// router
 const authRouter = require("./routes/auth");
 const usersRouter = require("./routes/users");
 const petsRouter = require("./routes/pets");
@@ -54,11 +56,6 @@ app.use("/users", usersRouter);
 app.use("/pets", petsRouter);
 app.use("/mapinfo", mapinfoRouter);
 app.use("/comments", commentsRouter);
-
-// test
-app.get("/", (req, res) => {
-  res.send("HELLO WORLD");
-});
 
 app.listen(port, () => {
   console.log("server on " + port);
