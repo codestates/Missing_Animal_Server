@@ -2,13 +2,24 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const session = require("express-session");
-const app = express();
 const cookieParser = require("cookie-parser");
-
+const app = express();
+const logger = require("morgan");
+const passport = require("passport");
 const { sequelize } = require("./models");
 sequelize.sync();
 
+const passportConfig = require("./config/JWTStrategy");
+
 const port = 8080;
+
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(passport.initialize());
+app.use(logger("dev")); //deploy : "combine" (monitor 하기 위함)
+
+passportConfig(passport);
 
 app.use(
   cors({
