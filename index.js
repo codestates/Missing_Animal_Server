@@ -17,7 +17,7 @@ app.use(
     credentials: true,
   })
 );
-app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(cookieParser());
 app.use(
   session({
     resave: false,
@@ -31,6 +31,8 @@ app.use(
     },
   })
 );
+app.use(express.urlencoded());
+app.use(express.json());
 
 const authRouter = require("./routes/auth");
 const usersRouter = require("./routes/users");
