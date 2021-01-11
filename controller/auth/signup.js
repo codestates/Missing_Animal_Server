@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
   const [users] = signup;
 
   if (users.username !== username) {
-    res.status(400).json({ message: "이미 가입된 회원입니다" });
+    res.status(400).json({ message: "already registered user" });
   } else {
     res.status(201).json({ message: "signup" });
   }
