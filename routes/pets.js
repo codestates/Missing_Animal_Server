@@ -8,14 +8,19 @@ const passport = require("passport");
 const router = express.Router();
 
 router.get("/petslist", petsController.pets.petslist);
-router.get("/detail/:id", petsController.pets.detail);
+router.get("/detail/:petsid", petsController.pets.detail);
 router.post(
   "/register",
   passport.authenticate("jwt", { session: false }),
   upload.array("img"),
   petsController.pets.register
 );
-router.put("/edit", petsController.pets.edit);
+router.put(
+  "/edit",
+  passport.authenticate("jwt", { session: false }),
+  upload.array("img"),
+  petsController.pets.edit
+);
 router.delete("/remove/:id", petsController.pets.remove);
 router.get("/search", petsController.pets.search);
 
