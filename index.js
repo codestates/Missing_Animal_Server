@@ -42,8 +42,6 @@ app.use(
     },
   })
 );
-app.use(express.urlencoded());
-app.use(express.json());
 
 const authRouter = require("./routes/auth");
 const usersRouter = require("./routes/users");
