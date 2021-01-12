@@ -1,5 +1,3 @@
-// const { Router } = require("express");
-
 const passport = require("passport");
 
 const express = require("express");
@@ -11,6 +9,6 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   usersController.users.myinfo
 );
-router.put("/:id/edit", usersController.users.edit);
+router.put("/edit/:id", usersController.users.edit);
 
 module.exports = router;

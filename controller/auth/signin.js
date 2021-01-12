@@ -1,8 +1,7 @@
 require("dotenv").config();
 
 const jwt = require("jsonwebtoken");
-const passport = require("passport");
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 
 const { Users } = require("../../models");
 
@@ -20,9 +19,17 @@ module.exports = async (req, res) => {
     // 비밀번호 확인
     const isMatch = await bcrypt.compare(password, users.password);
     if (isMatch) {
-      const token = jwt.sign(users.toJSON(), process.env.JWT_SECRET, {
-        expiresIn: "7d",
-      });
+      const token = jwt.sign(
+        {
+          id: users.id,
+          email: users.email,
+          username: users.username,
+        },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "7d",
+        }
+      );
       return res
         .status(200)
         .cookie("token", token)
@@ -32,34 +39,3 @@ module.exports = async (req, res) => {
     }
   }
 };
-
-// module.exports = (req, res) => {
-//   const { email, password } = req.body;
-
-//   // 이메일 확인
-//   Users.findOne({
-//     where: { email },
-//     // where: { email, password: hash },
-//   }).then((user) => {
-//     if (!user) {
-//       return res.status(400).json({ message: "invalid email" });
-//     } else {
-//       // 비밀번호 확인
-//       bcrypt.compare(password, user.password).then((isMatch) => {
-//         if (isMatch) {
-//           const token = jwt.sign(user.toJSON(), process.env.JWT_SECRET, {
-//             expiresIn: "7d",
-//           });
-//           // console.log("user:", user);
-//           return res
-//             .status(200)
-//             .cookie("token", token)
-//             .json({ message: "signin OK" });
-//         } else {
-//           // console.log("user:", user);
-//           return res.status(400).json({ message: "invalid password" });
-//         }
-//       });
-//     }
-//   });
-// };

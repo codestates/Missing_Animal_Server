@@ -19,7 +19,6 @@
   "homepage": "https://github.com/psy-g/Missing_Animal_Server#readme",
   "dependencies": {
     "axios": "^0.21.1",
-    "bcryptjs": "^2.4.3",
     "bcrypt": "^5.0.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",

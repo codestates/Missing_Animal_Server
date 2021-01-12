@@ -1,5 +1,3 @@
-// const { Router } = require("express");
-
 const express = require("express");
 const mapinfoController = require("../controller");
 const router = express.Router();
