@@ -11,7 +11,9 @@ sequelize.sync();
 
 const passportConfig = require("./config/JWTStrategy");
 
-const port = 8080;
+// const port = 8080;
+
+app.set("port", process.env.PORT || 8080);
 
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
@@ -55,6 +57,4 @@ app.use("/pets", petsRouter);
 app.use("/mapinfo", mapinfoRouter);
 app.use("/comments", commentsRouter);
 
-app.listen(port, () => {
-  console.log("server on " + port);
-});
+app.listen(app.get("port"));
