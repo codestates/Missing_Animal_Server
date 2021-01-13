@@ -18,10 +18,13 @@ router.post(
 router.put(
   "/edit",
   passport.authenticate("jwt", { session: false }),
-  upload.array("img"),
   petsController.pets.edit
 );
-router.delete("/remove/:id", petsController.pets.remove);
+router.delete(
+  "/remove/:id",
+  passport.authenticate("jwt", { session: false }),
+  petsController.pets.remove
+);
 router.get("/search", petsController.pets.search);
 
 module.exports = router;
