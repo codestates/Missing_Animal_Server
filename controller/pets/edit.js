@@ -1,6 +1,10 @@
 const { Pets, PetsImages } = require("../../models");
+const fs = require("fs");
 
 module.exports = async (req, res) => {
+  // const test = fs.readdir("uploads", filelist);
+  // console.log("test:", test);
+
   const { id } = req.user;
 
   const {
@@ -12,7 +16,7 @@ module.exports = async (req, res) => {
     reward,
   } = req.body;
 
-  Pets.update(
+  await Pets.update(
     {
       title,
       petname,
@@ -32,18 +36,6 @@ module.exports = async (req, res) => {
     where: { userid: id },
   });
 
-  // 데이터베이스에 이미지 삭제
-  // await PetsImages.destroy({
-  //   where: { petId: updatePet.id },
-  // });
-
-  // console.log("petId:", updatePet.id);
-
-  // req.files 이미지 배열로
-  // const getImg = await req.files.map((obj) => obj.path);
-  // console.log("getImg:", getImg);
-  // console.log("getImg:", getImg.length);
-
   const imageRegister = req.files.reduce((acc, file) => {
     const fileObj = {
       imagePath: file.path,
@@ -53,19 +45,32 @@ module.exports = async (req, res) => {
     return acc;
   }, []);
 
-  // console.log("imageRegister:", imageRegister.length);
-
   const checkPetImg = await PetsImages.findAll({
     where: { petId: updatePet.id },
   });
 
-  // console.log("checkPetImg:", checkPetImg.length);
+  // const test = checkPetImg.map((obj) => obj.dataValues.imagePath);
+
+  // petsImages 테이블 imagePath에 담겨진 이미지 저장 경로를 가져와서 앞에 uploads 없애고 새로운 배열로
+  const serchImg = checkPetImg.map((obj) => obj.dataValues);
+  const newArr = [];
+  serchImg.filter((el) => {
+    newArr.push(el.imagePath.replace("uploads/", ""));
+  });
+
+  console.log("newArr:", newArr);
 
   // 올리려는 이미지 개수에 따라 다르게 처리
   if (imageRegister.length === 3) {
     await PetsImages.destroy({
       where: { petId: updatePet.id },
     });
+
+    // uploads 폴더에 있는 이미지 삭제
+    for (let i = 0; i < 3; i++) {
+      fs.unlinkSync(`uploads/${newArr[i]}`);
+    }
+
     await PetsImages.bulkCreate(imageRegister);
     return res.status(201).json({ message: "edit OK" });
   }
@@ -74,6 +79,11 @@ module.exports = async (req, res) => {
       where: { petId: updatePet.id },
       limit: 2,
     });
+
+    for (let i = 0; i < 2; i++) {
+      fs.unlinkSync(`uploads/${newArr[i]}`);
+    }
+
     await PetsImages.bulkCreate(imageRegister);
     return res.status(201).json({ message: "edit OK" });
   }
@@ -82,6 +92,11 @@ module.exports = async (req, res) => {
       where: { petId: updatePet.id },
       limit: 1,
     });
+
+    for (let i = 0; i < 1; i++) {
+      fs.unlinkSync(`uploads/${newArr[i]}`);
+    }
+
     await PetsImages.bulkCreate(imageRegister);
     return res.status(201).json({ message: "edit OK" });
   }
@@ -90,6 +105,11 @@ module.exports = async (req, res) => {
       where: { petId: updatePet.id },
       limit: 1,
     });
+
+    for (let i = 0; i < 1; i++) {
+      fs.unlinkSync(`uploads/${newArr[i]}`);
+    }
+
     await PetsImages.bulkCreate(imageRegister);
     return res.status(201).json({ message: "edit OK" });
   } else {
