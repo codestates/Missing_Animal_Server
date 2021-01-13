@@ -8,7 +8,7 @@ const passport = require("passport");
 const router = express.Router();
 
 router.get("/petslist", petsController.pets.petslist);
-router.get("/detail/:id", petsController.pets.detail);
+router.get("/detail/:petsid", petsController.pets.detail);
 router.post(
   "/register",
   passport.authenticate("jwt", { session: false }),
