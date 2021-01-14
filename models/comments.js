@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) =>
     {
       image: {
         type: DataTypes.STRING(255),
-        allowNull: false,
+        allowNull: true,
       },
       text: {
         type: DataTypes.STRING(255),
@@ -12,11 +12,11 @@ module.exports = (sequelize, DataTypes) =>
       },
       nick: {
         type: DataTypes.STRING(50),
-        allowNull: false,
+        allowNull: true,
       },
       password: {
         type: DataTypes.STRING(),
-        allowNull: false,
+        allowNull: true,
       },
     },
     {
