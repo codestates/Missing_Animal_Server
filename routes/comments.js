@@ -6,7 +6,6 @@ const { upload } = require("./multerComment");
 
 router.post(
   "/register",
-  // upload.fields([{ name: "img", maxCount: 1 }]),
   upload.array("img"),
   commentsController.comments.register
 );
