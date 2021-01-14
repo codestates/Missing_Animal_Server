@@ -1,22 +1,60 @@
-const axios = require("axios");
+const { Pets, PetsImages, Users } = require("../../models");
+const sequelize = require("sequelize");
+const Op = sequelize.Op;
 
-module.exports = (req, res) => {
-  res.status(200).json({
-    filteredList: [
+module.exports = async (req, res) => {
+  const { search } = req.body;
+
+  const filterPets = await Pets.findAll({
+    where: {
+      [Op.or]: {
+        title: {
+          [Op.like]: "%" + search + "%",
+        },
+        petname: {
+          [Op.like]: "%" + search + "%",
+        },
+        area: {
+          [Op.like]: "%" + search + "%",
+        },
+        sex: {
+          [Op.like]: "%" + search + "%",
+        },
+        species: {
+          [Op.like]: "%" + search + "%",
+        },
+        reward: {
+          [Op.like]: "%" + search + "%",
+        },
+        description: {
+          [Op.like]: "%" + search + "%",
+        },
+      },
+    },
+    attributes: [
+      "id",
+      "title",
+      "petname",
+      "area",
+      "sex",
+      "missingDate",
+      "description",
+      "species",
+      "reward",
+      "createdAt",
+    ],
+    order: [["createdAt", "DESC"]],
+    include: [
       {
-        petsId: "petsId",
-        thumbnail: "thumbnail",
-        title: "title",
-        petname: "petname",
-        description: "description",
+        model: PetsImages,
+        attributes: ["imagePath"],
       },
       {
-        petsId: "petsId",
-        thumbnail: "thumbnail",
-        title: "title",
-        petname: "petname",
-        description: "description",
+        model: Users,
+        attributes: ["id", "username", "email", "mobile"],
       },
     ],
   });
+
+  res.status(200).json({ filteredList: filterPets });
 };
