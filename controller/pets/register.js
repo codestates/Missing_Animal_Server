@@ -22,13 +22,13 @@ module.exports = async (req, res) => {
     description,
     species,
     reward,
-    thumbnail: req.files[0].path,
+    thumbnail: req.files[0].location,
     userId: id,
   });
 
   const imageRegister = req.files.reduce((acc, file) => {
     const fileObj = {
-      imagePath: file.path,
+      imagePath: file.location,
       petId: register.id,
     };
     acc.push(fileObj);
