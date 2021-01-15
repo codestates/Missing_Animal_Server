@@ -9,7 +9,7 @@ router.post(
   upload.array("img"),
   commentsController.comments.register
 );
-
+router.get("/read/:id", commentsController.comments.read);
 router.put("/edit", commentsController.comments.edit);
 router.delete("/remove/:id", commentsController.comments.remove);
 
