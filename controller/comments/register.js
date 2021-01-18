@@ -22,7 +22,7 @@ module.exports = async (req, res) => {
   } else {
     if (nick && password && text) {
       await Comments.create({
-        image: req.files[0].path,
+        image: req.files[0].location,
         text,
         nick,
         password,
@@ -41,7 +41,7 @@ module.exports = async (req, res) => {
       return res.status(400).json({ message: "required userId" });
     } else {
       await Comments.create({
-        image: req.files[0].path,
+        image: req.files[0].location,
         text,
         nick: tokenDecoded.username,
         password: null,

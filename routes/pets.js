@@ -18,6 +18,7 @@ router.post(
 router.put(
   "/edit",
   passport.authenticate("jwt", { session: false }),
+  upload.any("img"),
   petsController.pets.edit
 );
 router.delete(

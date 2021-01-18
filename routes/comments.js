@@ -10,7 +10,7 @@ router.post(
   commentsController.comments.register
 );
 router.get("/read/:id", commentsController.comments.read);
-router.put("/edit", commentsController.comments.edit);
+router.put("/edit", upload.any("img"), commentsController.comments.edit);
 router.delete("/remove/:id", commentsController.comments.remove);
 
 module.exports = router;
