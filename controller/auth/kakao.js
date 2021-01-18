@@ -1,9 +1,12 @@
+require("dotenv").config();
+const jwt = require("jsonwebtoken");
+const { Users } = require("../../models");
 const axios = require("axios");
 
 module.exports = async (req, res) => {
   const { authorizationCode } = req.body;
 
-  const redirectUri = "http://localhost:3000";
+  const redirectUri = "http://localhost:3000/";
   const kakaoTokenRequest = await axios.post(
     `https://kauth.kakao.com/oauth/token?code=${authorizationCode}&client_id=${process.env.KAKAO_CLIENT_ID}&redirect_uri=${redirectUri}&grant_type=authorization_code`
   );
@@ -20,7 +23,7 @@ module.exports = async (req, res) => {
   // const snsId = kakao.id;
   // const profileImage = kakao.properties.thumbnail_image;
 
-  const userRegister = await User.findOrCreate({
+  const userRegister = await Users.findOrCreate({
     where: { email },
     defaults: {
       email,
