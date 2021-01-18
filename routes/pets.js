@@ -26,6 +26,6 @@ router.delete(
   passport.authenticate("jwt", { session: false }),
   petsController.pets.remove
 );
-router.get("/search", petsController.pets.search);
+router.post("/search", petsController.pets.search);
 
 module.exports = router;
