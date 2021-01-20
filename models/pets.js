@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) =>
       },
       area: {
         type: DataTypes.STRING(255),
-        allowNull: false,
+        allowNull: true,
       },
       sex: {
         type: DataTypes.STRING(50),
@@ -37,6 +37,14 @@ module.exports = (sequelize, DataTypes) =>
       thumbnail: {
         type: DataTypes.STRING(255),
         allowNull: false,
+      },
+      latitude: {
+        type: DataTypes.STRING(),
+        allowNull: true,
+      },
+      longitude: {
+        type: DataTypes.STRING(),
+        allowNull: true,
       },
     },
     {
