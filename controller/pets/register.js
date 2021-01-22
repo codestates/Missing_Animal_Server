@@ -11,6 +11,8 @@ module.exports = async (req, res) => {
     description,
     species,
     reward,
+    latitude,
+    longitude,
   } = req.body;
 
   const register = await Pets.create({
@@ -22,6 +24,8 @@ module.exports = async (req, res) => {
     description,
     species,
     reward,
+    latitude,
+    longitude,
     thumbnail: req.files[0].location,
     userId: id,
   });
