@@ -5,7 +5,7 @@ const saltRounds = 10;
 module.exports = async (req, res) => {
   const { username, email, mobile, oldpassword, newpassword } = req.body;
 
-  // DB에 담긴 비밀번호 확인
+  // DB에 담긴 비밀번호 확인.
   const dbPass = await Users.findOne({
     where: { id: req.params.id },
     attributes: ["password"],
