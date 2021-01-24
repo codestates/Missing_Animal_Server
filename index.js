@@ -53,4 +53,9 @@ app.use("/pets", petsRouter);
 app.use("/mapinfo", mapinfoRouter);
 app.use("/comments", commentsRouter);
 
+// elb healthy check
+app.get("/", (req, res) => {
+  res.status(200).json({ message: "OK" });
+});
+
 app.listen(app.get("port"));
