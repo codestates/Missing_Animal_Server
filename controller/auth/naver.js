@@ -63,6 +63,7 @@ module.exports = async (req, res) => {
     userid: userInfo.id,
     username: userInfo.username,
     usermobile: userInfo.mobile,
+    message: "naver login",
     token: localToken,
   });
 };

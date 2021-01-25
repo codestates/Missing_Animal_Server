@@ -30,7 +30,10 @@ module.exports = async (req, res) => {
           expiresIn: "7d",
         }
       );
-      return res.status(200).cookie("token", token).json({ token });
+      return res
+        .status(200)
+        .cookie("token", token)
+        .json({ message: "signin OK", token });
     } else {
       return res.status(400).json({ message: "invalid password" });
     }
