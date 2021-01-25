@@ -42,5 +42,5 @@ module.exports = async (req, res) => {
   res
     .status(201)
     .cookie("access_token", localToken)
-    .json({ message: "kakao login" });
+    .json({ token: localToken });
 };
