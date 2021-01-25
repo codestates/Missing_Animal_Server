@@ -10,6 +10,8 @@ module.exports = async (req, res) => {
       "reward",
       "missingDate",
       "petname",
+      "latitude",
+      "longitude",
     ],
   });
 
