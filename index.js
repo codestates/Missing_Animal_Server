@@ -3,34 +3,34 @@ const express = require("express");
 const cors = require("cors");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
-const app = express();
 const logger = require("morgan");
 const passport = require("passport");
 const { sequelize } = require("./models");
-sequelize.sync();
-
 const passportConfig = require("./config/JWTStrategy");
 
-// const port = 8080;
+const authRouter = require("./routes/auth");
+const usersRouter = require("./routes/users");
+const petsRouter = require("./routes/pets");
+const mapinfoRouter = require("./routes/mapinfo");
+const commentsRouter = require("./routes/comments");
+
+const app = express();
+sequelize.sync();
+passportConfig(passport);
 
 app.set("port", process.env.PORT || 8080);
 
-app.use(cookieParser());
+app.use(logger("combined"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(passport.initialize());
-app.use(logger("dev")); //deploy : "combine" (monitor 하기 위함)
-
-passportConfig(passport);
-
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://missinganimal.ml",
     methods: ["OPTIONS", "GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
-app.use(cookieParser());
+app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(
   session({
     resave: false,
@@ -44,17 +44,18 @@ app.use(
     },
   })
 );
-
-const authRouter = require("./routes/auth");
-const usersRouter = require("./routes/users");
-const petsRouter = require("./routes/pets");
-const mapinfoRouter = require("./routes/mapinfo");
-const commentsRouter = require("./routes/comments");
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use("/auth", authRouter);
 app.use("/users", usersRouter);
 app.use("/pets", petsRouter);
 app.use("/mapinfo", mapinfoRouter);
 app.use("/comments", commentsRouter);
+
+// elb healthy check
+app.get("/", (req, res) => {
+  res.status(200).json({ message: "OK" });
+});
 
 app.listen(app.get("port"));
