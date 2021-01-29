@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
     ],
   });
 
-  console.log(myPetInfo);
+  // console.log(myPetInfo);
 
   let petslist = [];
   if (myPetInfo.length) {
