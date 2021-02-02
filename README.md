@@ -17,4 +17,4 @@ Finders가 당신의 발이 되어 드리고자 합니다.
 <br>
 <br>
 
-<a href="https://github.com/codestates/Missing_Animal_Client/wiki"><h3>프로젝트에 대해 더 많은 정보를 보려면 여기를 클릭해주세요🐾<h3></a>
+<a href="https://github.com/codestates/Missing_Animal_Client/wiki"><h3>프로젝트에 대 더 많은 정보를 보려면 여기를 클릭해주세요🐾<h3></a>
